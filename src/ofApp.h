@@ -8,8 +8,7 @@
 #include "ofxFaceTrackerThreaded.h"
 #include "ofxAssimpModelLoader.h"
 #include "helpers.h"
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/video/background_segm.hpp>
+#include "gaussian1d.h"
 
 class ofApp : public ofBaseApp{
 	public:
@@ -53,4 +52,18 @@ class ofApp : public ofBaseApp{
     
     ofxAssimpModelLoader santaHat;
     ofLight light;
+    
+    //vecs for smoothing
+    std::vector<float> camTrackerX;
+    std::vector<float> camTrackerY;
+    std::vector<float> faceOutlineX;
+    std::vector<float> faceOutlineY;
+    std::vector<float> faceRectW;
+    std::vector<float> faceRotateX;
+    std::vector<float> faceRotateY;
+    std::vector<float> faceRotateZ;
+    std::vector<float> faceRotateAngle;
+    std::vector<float> faceScale;
+    
+    ofPoint hatTranslation;
 };

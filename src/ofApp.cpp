@@ -53,6 +53,39 @@ void ofApp::update() {
 		
 		cloneReady = camTracker.getFound();
 		if(cloneReady) {
+            
+            // get rotation
+            ofMatrix4x4 rot = camTracker.getRotationMatrix();
+            float angle,x,y,z;
+            rot.getRotate().getRotate(angle, x, y, z);
+            
+            // push into smooth vecs
+            faceRotateX.push_back(x); faceRotateY.push_back(y); faceRotateZ.push_back(z); faceRotateAngle.push_back(angle);
+            camTrackerX.push_back(camTracker.getPosition().x);
+            camTrackerY.push_back(camTracker.getPosition().y);
+            faceOutlineX.push_back(camTracker.getImageFeature(ofxFaceTracker::FACE_OUTLINE).getBoundingBox().position.x);
+            faceOutlineY.push_back(camTracker.getImageFeature(ofxFaceTracker::FACE_OUTLINE).getBoundingBox().position.y);
+            faceRectW.push_back(camTracker.getImageFeature(ofxFaceTracker::FACE_OUTLINE).getBoundingBox().width);
+            faceScale.push_back(camTracker.getScale());
+            
+            //smooth
+            gaussianiir1d(&camTrackerX[0], camTrackerX.size(), smoothAlpha, smoothSteps);
+            gaussianiir1d(&camTrackerY[0], camTrackerY.size(), smoothAlpha, smoothSteps);
+            gaussianiir1d(&faceOutlineX[0], faceOutlineX.size(), smoothAlpha, smoothSteps);
+            gaussianiir1d(&faceOutlineY[0], faceOutlineY.size(), smoothAlpha, smoothSteps);
+            gaussianiir1d(&faceRectW[0], faceRectW.size(), smoothAlpha, smoothSteps);
+            gaussianiir1d(&faceRotateX[0], faceRotateX.size(), smoothAlpha, smoothSteps);
+            gaussianiir1d(&faceRotateY[0], faceRotateY.size(), smoothAlpha, smoothSteps);
+            gaussianiir1d(&faceRotateZ[0], faceRotateZ.size(), smoothAlpha, smoothSteps);
+            gaussianiir1d(&faceRotateAngle[0], faceRotateAngle.size(), smoothAlpha, smoothSteps);
+            gaussianiir1d(&faceScale[0], faceScale.size(), smoothAlpha, smoothSteps);
+
+            // get smoothed translation
+            hatTranslation = ofPoint(faceOutlineX[faceOutlineX.size()-1], faceOutlineY[faceOutlineY.size()-1]);
+            hatTranslation.x+= faceRectW[faceRectW.size()-1]/2;
+            hatTranslation = hatTranslation - ofPoint(camTrackerX[camTrackerX.size()-1], camTrackerY[camTrackerY.size()-1]);
+            
+            
 			ofMesh camMesh = camTracker.getImageMesh();
 			camMesh.clearTexCoords();
 			camMesh.addTexCoords(srcPoints);
@@ -105,29 +138,24 @@ void ofApp::draw() {
 	if(src.getWidth() == 0) {
 		drawHighlightString("drag an image here", 10, 30);
         ofPushMatrix();
-        ofTranslate(camTracker.getPosition());
-        
-        // deal with rotation
-        ofMatrix4x4 rot = camTracker.getRotationMatrix();
-        float angle,x,y,z;
-        rot.getRotate().getRotate(angle, x, y, z);
-        ofRotate(angle, -x, -y, z);
-        float scaleRatio = 0.22;
-        ofScale(camTracker.getScale()*scaleRatio, camTracker.getScale()*scaleRatio, camTracker.getScale()*scaleRatio);
-
-        ofPoint topPoint = camTracker.getImageFeature(ofxFaceTracker::FACE_OUTLINE).getBoundingBox().position;
-        topPoint.x+= camTracker.getImageFeature(ofxFaceTracker::FACE_OUTLINE).getBoundingBox().width/2;
-        ofPoint finalPoint = topPoint - camTracker.getPosition();
-        
-        ofTranslate(finalPoint.x, finalPoint.y, mata);
-        
-        light.enable();
-        light.setOrientation( ofVec3f( 0, cos(ofGetElapsedTimef()) * RAD_TO_DEG, 0) );
-        light.setPosition(0,0, 200);
-        ofEnableDepthTest();
-        santaHat.drawFaces();
-        ofDisableDepthTest();
-        light.disable();
+        if(camTrackerX.size() && camTrackerY.size()){
+            //position model
+            ofTranslate(ofVec2f(camTrackerX[camTrackerX.size()-1], camTrackerY[camTrackerY.size() - 1]));
+            ofRotate(faceRotateAngle[faceRotateAngle.size() - 1], -faceRotateX[faceRotateX.size() - 1], -faceRotateY[faceRotateY.size() - 1],
+                     faceRotateZ[faceRotateZ.size() - 1]);
+            float scaleRatio = 0.22;
+            ofScale(faceScale[faceScale.size()-1]*scaleRatio, faceScale[faceScale.size()-1]*scaleRatio, faceScale[faceScale.size()-1]*scaleRatio);
+            ofTranslate(hatTranslation);
+            
+            //draw model
+            light.enable();
+            light.setOrientation( ofVec3f( 0, cos(ofGetElapsedTimef()) * RAD_TO_DEG, 0) );
+            light.setPosition(0,0, 200);
+            ofEnableDepthTest();
+            santaHat.drawFaces();
+            ofDisableDepthTest();
+            light.disable();
+        }
 
         ofPopMatrix();
 	}

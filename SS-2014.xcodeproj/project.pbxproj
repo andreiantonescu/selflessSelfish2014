@@ -79,6 +79,7 @@
 		D984D8611A3E24930054C97B /* libopencv_photo.2.4.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D984D83C1A3E24930054C97B /* libopencv_photo.2.4.9.dylib */; };
 		D984D8621A3E24930054C97B /* libopencv_video.2.4.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D984D83D1A3E24930054C97B /* libopencv_video.2.4.9.dylib */; };
 		D984D8631A3E24930054C97B /* libopencv_video.2.4.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D984D83E1A3E24930054C97B /* libopencv_video.2.4.9.dylib */; };
+		D984D8691A3E39280054C97B /* gaussian1d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D984D8671A3E39280054C97B /* gaussian1d.cpp */; };
 		D9EC1B031A3E199700D8571E /* helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9EC1B011A3E199700D8571E /* helpers.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -284,6 +285,8 @@
 		D984D83C1A3E24930054C97B /* libopencv_photo.2.4.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_photo.2.4.9.dylib; path = /usr/local/lib/libopencv_photo.2.4.9.dylib; sourceTree = "<absolute>"; };
 		D984D83D1A3E24930054C97B /* libopencv_video.2.4.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_video.2.4.9.dylib; path = /usr/local/lib/libopencv_video.2.4.9.dylib; sourceTree = "<absolute>"; };
 		D984D83E1A3E24930054C97B /* libopencv_video.2.4.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_video.2.4.9.dylib; path = /usr/local/lib/libopencv_video.2.4.9.dylib; sourceTree = "<absolute>"; };
+		D984D8671A3E39280054C97B /* gaussian1d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gaussian1d.cpp; sourceTree = "<group>"; };
+		D984D8681A3E39280054C97B /* gaussian1d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gaussian1d.h; sourceTree = "<group>"; };
 		D9EC1B011A3E199700D8571E /* helpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = helpers.cpp; sourceTree = "<group>"; };
 		D9EC1B021A3E199700D8571E /* helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = helpers.h; sourceTree = "<group>"; };
 		D9EC1B051A3E1A0B00D8571E /* constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
@@ -870,6 +873,8 @@
 		D9EC1B041A3E199B00D8571E /* helpers */ = {
 			isa = PBXGroup;
 			children = (
+				D984D8671A3E39280054C97B /* gaussian1d.cpp */,
+				D984D8681A3E39280054C97B /* gaussian1d.h */,
 				D9EC1B011A3E199700D8571E /* helpers.cpp */,
 				D9EC1B021A3E199700D8571E /* helpers.h */,
 				D9EC1B051A3E1A0B00D8571E /* constants.h */,
@@ -1020,6 +1025,7 @@
 				D95B651319FD398000D4ED3E /* PDM.cc in Sources */,
 				D95B64DD19FD397900D4ED3E /* Helpers.cpp in Sources */,
 				D95B650D19FD398000D4ED3E /* CLM.cc in Sources */,
+				D984D8691A3E39280054C97B /* gaussian1d.cpp in Sources */,
 				D95B651219FD398000D4ED3E /* PAW.cc in Sources */,
 				D944A4F21A37B6EF00DE4E9F /* ofxAssimpAnimation.cpp in Sources */,
 				D93D0DD61A3C9E680059C543 /* glm.c in Sources */,

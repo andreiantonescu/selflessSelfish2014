@@ -14,5 +14,7 @@
 #define initialPreprocGamma 2
 #define camWidth 640
 #define camHeight 480
+#define smoothAlpha 2
+#define smoothSteps 1
 
 #endif
