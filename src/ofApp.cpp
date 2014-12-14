@@ -1,9 +1,11 @@
 #include "ofApp.h"
 
 using namespace ofxCv;
+using namespace std;
 
 const int ofApp::lines [] = {22,27,27,21,21,22,22,23,23,21,21,20,20,23,23,24,24,25,25,26,26,16,16,15,15,14,14,13,13,12,12,11,11,10,10,9,9,8,8,7,7,6,6,5,5,4,4,3,3,2,2,1,1,0,0,17,17,18,18,19,19,20,27,28,28,29,29,30,30,31,30,32,30,33,30,34,30,35,35,34,34,33,33,32,32,31,31,48,31,49,31,50,32,50,33,50,33,51,33,52,34,52,35,52,35,53,35,54,48,49,49,50,50,51,51,52,52,53,53,54,54,55,55,56,56,57,57,58,58,59,59,48,48,60,60,61,61,62,62,54,54,63,63,64,64,65,65,48,49,60,60,50,50,61,61,51,61,52,52,62,62,53,55,63,63,56,56,64,64,57,64,58,58,65,65,59,36,37,37,38,38,39,39,40,40,41,41,36,42,43,43,44,44,45,45,46,46,47,47,42,27,42,42,22,42,23,43,23,43,24,43,25,44,25,44,26,45,26,45,16,45,15,46,15,46,14,47,14,29,47,47,28,28,42,27,39,39,21,39,20,38,20,38,19,38,18,37,18,37,17,36,17,36,0,36,1,41,1,41,2,40,2,2,29,29,40,40,28,28,39,29,31,31,3,3,29,29,14,14,35,35,29,3,48,48,4,48,6,6,59,59,7,7,58,58,8,8,57,8,56,56,9,9,55,55,10,10,54,54,11,54,12,54,13,13,35};
 int mata;
+
 void ofApp::setup() {
 #ifdef TARGET_OSX
 	ofSetDataPathRoot("../../../data/");
@@ -28,24 +30,18 @@ void ofApp::setup() {
 	selectArea = false;
     
 
-    santaHat.loadModel("santa-cut.3ds", true);
-//    santaHat.setPosition(300, 300, 0);
+    santaHat.loadModel("/Users/andreiantonescu/Desktop/blender-santa/santa-cut3.3ds", true);
     santaHat.setScale(0.3, 0.3,0.3);
 
     
     ofEnableBlendMode(OF_BLENDMODE_DISABLED);
-    ofEnableDepthTest();
     glShadeModel(GL_SMOOTH);
     
     light.setAmbientColor(ofFloatColor(0.2,0.2,0.2));
     light.setDiffuseColor(ofFloatColor(0.5,0.5,0.5));
     light.setSpecularColor(ofFloatColor(0.15, 0.05, 0.05));
     
-//    light.setDirectional();
-    
     light.setPosition(0, 300, 0);
-    
-//    ofEnableSeparateSpecularLight();
     
     mata = 0;
 }
@@ -53,7 +49,7 @@ void ofApp::setup() {
 void ofApp::update() {
 	cam.update();
 	if(cam.isFrameNew()) {
-		camTracker.update(toCv(cam));
+		camTracker.update(initialFramePreproc(toCv(cam)));
 		
 		cloneReady = camTracker.getFound();
 		if(cloneReady) {
@@ -76,8 +72,6 @@ void ofApp::update() {
             camFbo.begin();
             ofClear(0,255);
             cam.draw(0, 0);
-//            ofSetColor(255,255,255,50);
-//            ofRect(0, 0, cam.getWidth(), cam.getHeight());
             camFbo.end();
 			
 			clone.setStrength(20);
@@ -97,15 +91,11 @@ void ofApp::draw() {
 	int xOffset = cam.getWidth();
 	
 	if(src.getWidth() > 0 && cloneReady) {
-        ofPushMatrix();
-        ofTranslate(0, 0,-200);
 		clone.draw(0, 0);
-        ofPopMatrix();
+        camTracker.draw();
 	} else {
-        ofPushMatrix();
-        ofTranslate(0, 0,-200);
 		cam.draw(0, 0);
-        ofPopMatrix();
+        camTracker.draw();
 	}
 	
 	if(!camTracker.getFound()) {
@@ -121,12 +111,10 @@ void ofApp::draw() {
         ofMatrix4x4 rot = camTracker.getRotationMatrix();
         float angle,x,y,z;
         rot.getRotate().getRotate(angle, x, y, z);
-        ofRotate(angle, -x, y, z);
-        float scaleRatio = 0.2;
+        ofRotate(angle, -x, -y, z);
+        float scaleRatio = 0.22;
         ofScale(camTracker.getScale()*scaleRatio, camTracker.getScale()*scaleRatio, camTracker.getScale()*scaleRatio);
-//        ofTranslate(-camTracker.getPosition());
-        
-//        ofRect(camTracker.getImageFeature(ofxFaceTracker::FACE_OUTLINE).getBoundingBox());
+
         ofPoint topPoint = camTracker.getImageFeature(ofxFaceTracker::FACE_OUTLINE).getBoundingBox().position;
         topPoint.x+= camTracker.getImageFeature(ofxFaceTracker::FACE_OUTLINE).getBoundingBox().width/2;
         ofPoint finalPoint = topPoint - camTracker.getPosition();
@@ -134,12 +122,13 @@ void ofApp::draw() {
         ofTranslate(finalPoint.x, finalPoint.y, mata);
         
         light.enable();
-//        light.setOrientation( ofVec3f( 0, cos(ofGetElapsedTimef()) * RAD_TO_DEG, 0) );
-//        light.setPosition( mouseX, mouseY, 200);
+        light.setOrientation( ofVec3f( 0, cos(ofGetElapsedTimef()) * RAD_TO_DEG, 0) );
+        light.setPosition(0,0, 200);
+        ofEnableDepthTest();
         santaHat.drawFaces();
+        ofDisableDepthTest();
         light.disable();
-        
-//        ofRect(camTracker.getImageFeature(ofxFaceTracker::FACE_OUTLINE).getBoundingBox()); // this base of hat - try
+
         ofPopMatrix();
 	}
 	

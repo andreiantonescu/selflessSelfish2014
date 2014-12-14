@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-               BuildableName = "facesub.app"
+               BuildableName = "SS-2014.app"
                BlueprintName = "SS-2014"
                ReferencedContainer = "container:SS-2014.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "facesub.app"
+            BuildableName = "SS-2014.app"
             BlueprintName = "SS-2014"
             ReferencedContainer = "container:SS-2014.xcodeproj">
          </BuildableReference>
@@ -52,7 +52,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "facesub.app"
+            BuildableName = "SS-2014.app"
             BlueprintName = "SS-2014"
             ReferencedContainer = "container:SS-2014.xcodeproj">
          </BuildableReference>
@@ -70,7 +70,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "facesub.app"
+            BuildableName = "SS-2014.app"
             BlueprintName = "SS-2014"
             ReferencedContainer = "container:SS-2014.xcodeproj">
          </BuildableReference>
