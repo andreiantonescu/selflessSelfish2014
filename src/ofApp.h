@@ -9,6 +9,7 @@
 #include "ofxAssimpModelLoader.h"
 #include "helpers.h"
 #include "gaussian1d.h"
+#include "ofxDelaunay.h"
 
 class ofApp : public ofBaseApp{
 	public:
@@ -66,4 +67,7 @@ class ofApp : public ofBaseApp{
     std::vector<float> faceScale;
     
     ofPoint hatTranslation;
+    
+    ofImage beard;
+    ofFbo beardFbo;
 };

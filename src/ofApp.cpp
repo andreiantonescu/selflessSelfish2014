@@ -4,7 +4,16 @@ using namespace ofxCv;
 using namespace std;
 
 const int ofApp::lines [] = {22,27,27,21,21,22,22,23,23,21,21,20,20,23,23,24,24,25,25,26,26,16,16,15,15,14,14,13,13,12,12,11,11,10,10,9,9,8,8,7,7,6,6,5,5,4,4,3,3,2,2,1,1,0,0,17,17,18,18,19,19,20,27,28,28,29,29,30,30,31,30,32,30,33,30,34,30,35,35,34,34,33,33,32,32,31,31,48,31,49,31,50,32,50,33,50,33,51,33,52,34,52,35,52,35,53,35,54,48,49,49,50,50,51,51,52,52,53,53,54,54,55,55,56,56,57,57,58,58,59,59,48,48,60,60,61,61,62,62,54,54,63,63,64,64,65,65,48,49,60,60,50,50,61,61,51,61,52,52,62,62,53,55,63,63,56,56,64,64,57,64,58,58,65,65,59,36,37,37,38,38,39,39,40,40,41,41,36,42,43,43,44,44,45,45,46,46,47,47,42,27,42,42,22,42,23,43,23,43,24,43,25,44,25,44,26,45,26,45,16,45,15,46,15,46,14,47,14,29,47,47,28,28,42,27,39,39,21,39,20,38,20,38,19,38,18,37,18,37,17,36,17,36,0,36,1,41,1,41,2,40,2,2,29,29,40,40,28,28,39,29,31,31,3,3,29,29,14,14,35,35,29,3,48,48,4,48,6,6,59,59,7,7,58,58,8,8,57,8,56,56,9,9,55,55,10,10,54,54,11,54,12,54,13,13,35};
-int mata;
+float mata;
+
+std::vector<ofVec2f> vecConversion(std::vector<ofVec3f>& vectorThree){
+    std::vector<ofVec2f> vectorTwo;
+    for(int i=0; i< vectorThree.size(); i++){
+        vectorTwo.push_back(ofVec2f(vectorThree.at(i).x, vectorThree.at(i).y));
+    }
+    
+    return vectorTwo;
+}
 
 void ofApp::setup() {
 #ifdef TARGET_OSX
@@ -29,12 +38,9 @@ void ofApp::setup() {
 	
 	selectArea = false;
     
-
     santaHat.loadModel("/Users/andreiantonescu/Desktop/blender-santa/santa-cut3.3ds", true);
     santaHat.setScale(0.3, 0.3,0.3);
 
-    
-    ofEnableBlendMode(OF_BLENDMODE_DISABLED);
     glShadeModel(GL_SMOOTH);
     
     light.setAmbientColor(ofFloatColor(0.2,0.2,0.2));
@@ -44,6 +50,11 @@ void ofApp::setup() {
     light.setPosition(0, 300, 0);
     
     mata = 0;
+    
+    beard.loadImage("/Users/andreiantonescu/Desktop/blender-santa/beard.png");
+    
+    beardFbo.allocate(1280, 780);
+
 }
 
 void ofApp::update() {
@@ -118,6 +129,41 @@ void ofApp::update() {
 
 void ofApp::draw() {
     
+    //beard mesh try
+    ofMesh triangulated;
+    if(camTracker.getFound()){
+        ofMesh faceMesh = camTracker.getMeanObjectMesh();
+        
+		ofxDelaunay delaunay;
+		
+		// add main face points
+		for(int i = 0; i < faceMesh.getNumVertices(); i++) {
+			delaunay.addPoint(ofVec2f(faceMesh.getVertex(i).x * camTracker.getScale(), faceMesh.getVertex(i).y * camTracker.getScale())
+                              + camTracker.getPosition() );
+		}
+        
+        // add boundary face points
+		float scaleFactor = 1.6;
+		ofPolyline outline = camTracker.getImageFeature(ofxFaceTracker::FACE_OUTLINE);
+		ofVec2f position = camTracker.getPosition();
+		for(int i = 0; i < outline.size(); i++) {
+			ofVec2f point((outline[i] - position) * scaleFactor + position);
+			delaunay.addPoint(point);
+		}
+        
+		// add the image corners
+		int w = 1280, h = 780;
+		delaunay.addPoint(ofVec2f(0, 0));
+		delaunay.addPoint(ofVec2f(w, 0));
+		delaunay.addPoint(ofVec2f(w, h));
+		delaunay.addPoint(ofVec2f(0, h));
+        
+        delaunay.triangulate();
+		triangulated = delaunay.triangleMesh;
+		triangulated.drawWireframe();
+    }
+    
+    
     glDisable(GL_LIGHTING);
 	ofSetColor(255);
 	
@@ -130,6 +176,51 @@ void ofApp::draw() {
 		cam.draw(0, 0);
         camTracker.draw();
 	}
+    
+    ofPushMatrix();
+    if(camTrackerX.size() && camTrackerY.size()){
+        //position model
+        float scaleRatio = 0.08;
+        
+        
+        //beard
+        beardFbo.begin();
+        ofPushMatrix();
+        ofClear(255);
+        ofTranslate(ofVec2f(camTrackerX[camTrackerX.size()-1], camTrackerY[camTrackerY.size() - 1]));
+        ofRotate(faceRotateAngle[faceRotateAngle.size() - 1], 0, -faceRotateY[faceRotateY.size() - 1],
+                 faceRotateZ[faceRotateZ.size() - 1]);
+        ofScale(faceScale[faceScale.size()-1]*scaleRatio, faceScale[faceScale.size()-1]*scaleRatio, faceScale[faceScale.size()-1]*scaleRatio);
+        ofTranslate(0, 200);
+        ofSetColor(255, 255, 255);
+        beard.draw(-beard.width/2, -beard.height/2);
+        
+        ofPopMatrix();
+        beardFbo.end();
+        
+        scaleRatio = 0.24;
+        // hat
+        ofTranslate(ofVec3f(camTrackerX[camTrackerX.size()-1], camTrackerY[camTrackerY.size() - 1],-100));
+        ofRotate(faceRotateAngle[faceRotateAngle.size() - 1], -faceRotateX[faceRotateX.size() - 1], -faceRotateY[faceRotateY.size() - 1],
+                 faceRotateZ[faceRotateZ.size() - 1]);
+        cout<<mata<<endl;
+        
+        ofScale(faceScale[faceScale.size()-1]*scaleRatio, faceScale[faceScale.size()-1]*scaleRatio, faceScale[faceScale.size()-1]*scaleRatio);
+        ofTranslate(hatTranslation);
+        
+        //draw model
+        light.enable();
+        light.setOrientation( ofVec3f( 0, cos(ofGetElapsedTimef()) * RAD_TO_DEG, 0) );
+        light.setPosition(0,0, 200);
+        ofEnableDepthTest();
+        ofEnableBlendMode(OF_BLENDMODE_DISABLED);
+        santaHat.drawFaces();
+        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+        ofDisableDepthTest();
+        light.disable();
+        glDisable(GL_LIGHTING);
+    }
+    ofPopMatrix();
 	
 	if(!camTracker.getFound()) {
 		drawHighlightString("camera face not found", 10, 10);
@@ -137,27 +228,6 @@ void ofApp::draw() {
 	}
 	if(src.getWidth() == 0) {
 		drawHighlightString("drag an image here", 10, 30);
-        ofPushMatrix();
-        if(camTrackerX.size() && camTrackerY.size()){
-            //position model
-            ofTranslate(ofVec2f(camTrackerX[camTrackerX.size()-1], camTrackerY[camTrackerY.size() - 1]));
-            ofRotate(faceRotateAngle[faceRotateAngle.size() - 1], -faceRotateX[faceRotateX.size() - 1], -faceRotateY[faceRotateY.size() - 1],
-                     faceRotateZ[faceRotateZ.size() - 1]);
-            float scaleRatio = 0.22;
-            ofScale(faceScale[faceScale.size()-1]*scaleRatio, faceScale[faceScale.size()-1]*scaleRatio, faceScale[faceScale.size()-1]*scaleRatio);
-            ofTranslate(hatTranslation);
-            
-            //draw model
-            light.enable();
-            light.setOrientation( ofVec3f( 0, cos(ofGetElapsedTimef()) * RAD_TO_DEG, 0) );
-            light.setPosition(0,0, 200);
-            ofEnableDepthTest();
-            santaHat.drawFaces();
-            ofDisableDepthTest();
-            light.disable();
-        }
-
-        ofPopMatrix();
 	}
 	
 	if (src.getWidth() > 0) {
@@ -202,6 +272,20 @@ void ofApp::draw() {
 		ofSetColor(255, 255, 255);
 		ofRect(startX, startY, mouseX - startX, mouseY - startY);
 	}
+    
+    
+//    ofMesh finalMesh;
+//    finalMesh.setMode(OF_PRIMITIVE_TRIANGLES);
+//    triangulated.addTexCoords(vecConversion(triangulated.getVertices()));
+//    
+//    beardFbo.getTextureReference().bind();
+//    camTracker.getImageMesh().draw();
+//    beardFbo.getTextureReference().unbind();
+    ofPushMatrix();
+    triangulated.drawWireframe();
+    ofPopMatrix();
+//    finalMesh.drawWireframe();
+
 }
 
 void ofApp::loadPoints(string filename) {
@@ -400,11 +484,11 @@ void ofApp::keyPressed(int key) {
 			break;
             
         case 'a': // Clear the selection.
-            mata-=10;
+            mata-=0.1;
             break;
             
         case 'z': // Clear the selection.
-            mata+=10;
+            mata+=0.1;
             break;
 	}
 }
