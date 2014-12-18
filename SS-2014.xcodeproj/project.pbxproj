@@ -39,7 +39,6 @@
 		D95B651219FD398000D4ED3E /* PAW.cc in Sources */ = {isa = PBXBuildFile; fileRef = D95B650719FD398000D4ED3E /* PAW.cc */; };
 		D95B651319FD398000D4ED3E /* PDM.cc in Sources */ = {isa = PBXBuildFile; fileRef = D95B650819FD398000D4ED3E /* PDM.cc */; };
 		D95B651419FD398000D4ED3E /* Tracker.cc in Sources */ = {isa = PBXBuildFile; fileRef = D95B650919FD398000D4ED3E /* Tracker.cc */; };
-		D95B651719FD39BF00D4ED3E /* Clone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D95B651519FD39BF00D4ED3E /* Clone.cpp */; };
 		D97E5E901A3A566A003ADFE7 /* Delaunay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D97E5E881A3A566A003ADFE7 /* Delaunay.cpp */; };
 		D97E5E911A3A566A003ADFE7 /* ofxDelaunay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D97E5E8C1A3A566A003ADFE7 /* ofxDelaunay.cpp */; };
 		D984D83F1A3E24930054C97B /* libopencv_contrib.2.4.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D984D81A1A3E24930054C97B /* libopencv_contrib.2.4.9.dylib */; };
@@ -80,6 +79,7 @@
 		D984D8621A3E24930054C97B /* libopencv_video.2.4.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D984D83D1A3E24930054C97B /* libopencv_video.2.4.9.dylib */; };
 		D984D8631A3E24930054C97B /* libopencv_video.2.4.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D984D83E1A3E24930054C97B /* libopencv_video.2.4.9.dylib */; };
 		D984D8691A3E39280054C97B /* gaussian1d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D984D8671A3E39280054C97B /* gaussian1d.cpp */; };
+		D984D8711A3FA9180054C97B /* ofxPostGlitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D984D86F1A3FA9180054C97B /* ofxPostGlitch.cpp */; };
 		D9EC1B031A3E199700D8571E /* helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9EC1B011A3E199700D8571E /* helpers.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -242,8 +242,6 @@
 		D95B650719FD398000D4ED3E /* PAW.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PAW.cc; sourceTree = "<group>"; };
 		D95B650819FD398000D4ED3E /* PDM.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PDM.cc; sourceTree = "<group>"; };
 		D95B650919FD398000D4ED3E /* Tracker.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Tracker.cc; sourceTree = "<group>"; };
-		D95B651519FD39BF00D4ED3E /* Clone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Clone.cpp; sourceTree = "<group>"; };
-		D95B651619FD39BF00D4ED3E /* Clone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Clone.h; sourceTree = "<group>"; };
 		D97E5E881A3A566A003ADFE7 /* Delaunay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Delaunay.cpp; sourceTree = "<group>"; };
 		D97E5E891A3A566A003ADFE7 /* Delaunay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Delaunay.h; sourceTree = "<group>"; };
 		D97E5E8C1A3A566A003ADFE7 /* ofxDelaunay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxDelaunay.cpp; sourceTree = "<group>"; };
@@ -287,6 +285,12 @@
 		D984D83E1A3E24930054C97B /* libopencv_video.2.4.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_video.2.4.9.dylib; path = /usr/local/lib/libopencv_video.2.4.9.dylib; sourceTree = "<absolute>"; };
 		D984D8671A3E39280054C97B /* gaussian1d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gaussian1d.cpp; sourceTree = "<group>"; };
 		D984D8681A3E39280054C97B /* gaussian1d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gaussian1d.h; sourceTree = "<group>"; };
+		D984D86F1A3FA9180054C97B /* ofxPostGlitch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxPostGlitch.cpp; sourceTree = "<group>"; };
+		D984D8701A3FA9180054C97B /* ofxPostGlitch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxPostGlitch.h; sourceTree = "<group>"; };
+		D984D8721A3FAEAE0054C97B /* glow.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = glow.frag; path = bin/data/Shaders/glow.frag; sourceTree = "<group>"; };
+		D9B3D2841A42457F00297376 /* slitscan.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = slitscan.frag; path = bin/data/Shaders/slitscan.frag; sourceTree = "<group>"; };
+		D9B3D2851A4245C000297376 /* slitscan.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = slitscan.vert; path = bin/data/Shaders/slitscan.vert; sourceTree = "<group>"; };
+		D9B3D2861A42470400297376 /* cut_slider.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = cut_slider.frag; path = bin/data/Shaders/cut_slider.frag; sourceTree = "<group>"; };
 		D9EC1B011A3E199700D8571E /* helpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = helpers.cpp; sourceTree = "<group>"; };
 		D9EC1B021A3E199700D8571E /* helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = helpers.h; sourceTree = "<group>"; };
 		D9EC1B051A3E1A0B00D8571E /* constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
@@ -382,6 +386,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				D984D86D1A3FA9180054C97B /* ofxPostGlitch */,
 				D93D0DCE1A3C9E680059C543 /* ofxObjLoader */,
 				D97E5E791A3A566A003ADFE7 /* ofxDelaunay */,
 				D944A4BC1A37B6EF00DE4E9F /* ofxAssimpModelLoader */,
@@ -781,15 +786,6 @@
 			path = lib;
 			sourceTree = "<group>";
 		};
-		D95B651819FD39C600D4ED3E /* clone */ = {
-			isa = PBXGroup;
-			children = (
-				D95B651519FD39BF00D4ED3E /* Clone.cpp */,
-				D95B651619FD39BF00D4ED3E /* Clone.h */,
-			);
-			name = clone;
-			sourceTree = "<group>";
-		};
 		D97E5E791A3A566A003ADFE7 /* ofxDelaunay */ = {
 			isa = PBXGroup;
 			children = (
@@ -870,6 +866,24 @@
 			name = opencv;
 			sourceTree = "<group>";
 		};
+		D984D86D1A3FA9180054C97B /* ofxPostGlitch */ = {
+			isa = PBXGroup;
+			children = (
+				D984D86E1A3FA9180054C97B /* src */,
+			);
+			name = ofxPostGlitch;
+			sourceTree = "<group>";
+		};
+		D984D86E1A3FA9180054C97B /* src */ = {
+			isa = PBXGroup;
+			children = (
+				D984D86F1A3FA9180054C97B /* ofxPostGlitch.cpp */,
+				D984D8701A3FA9180054C97B /* ofxPostGlitch.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxPostGlitch/src;
+			sourceTree = "<group>";
+		};
 		D9EC1B041A3E199B00D8571E /* helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -910,13 +924,16 @@
 				BB4B014C10F69532006C3DED /* addons */,
 				E45BE5980E8CC70C009D7055 /* frameworks */,
 				E4B69B5B0A3A1756003C02F2 /* SS-2014Debug.app */,
+				D984D8721A3FAEAE0054C97B /* glow.frag */,
+				D9B3D2841A42457F00297376 /* slitscan.frag */,
+				D9B3D2851A4245C000297376 /* slitscan.vert */,
+				D9B3D2861A42470400297376 /* cut_slider.frag */,
 			);
 			sourceTree = "<group>";
 		};
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				D95B651819FD39C600D4ED3E /* clone */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
@@ -1027,6 +1044,7 @@
 				D95B650D19FD398000D4ED3E /* CLM.cc in Sources */,
 				D984D8691A3E39280054C97B /* gaussian1d.cpp in Sources */,
 				D95B651219FD398000D4ED3E /* PAW.cc in Sources */,
+				D984D8711A3FA9180054C97B /* ofxPostGlitch.cpp in Sources */,
 				D944A4F21A37B6EF00DE4E9F /* ofxAssimpAnimation.cpp in Sources */,
 				D93D0DD61A3C9E680059C543 /* glm.c in Sources */,
 				D9EC1B031A3E199700D8571E /* helpers.cpp in Sources */,
@@ -1046,7 +1064,6 @@
 				D95B64DE19FD397900D4ED3E /* Kalman.cpp in Sources */,
 				D95B651019FD398000D4ED3E /* IO.cc in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
-				D95B651719FD39BF00D4ED3E /* Clone.cpp in Sources */,
 				D944A4F41A37B6EF00DE4E9F /* ofxAssimpModelLoader.cpp in Sources */,
 				D95B650F19FD398000D4ED3E /* FDet.cc in Sources */,
 				D95B650B19FD398000D4ED3E /* ExpressionClassifier.cpp in Sources */,
@@ -1225,7 +1242,7 @@
 					/Users/andreiantonescu/Documents/of_v0.8.4_osx_release/addons/ofxAssimpModelLoader/libs/assimp/lib/osx,
 				);
 				PRODUCT_NAME = "SS-2014Debug";
-				USER_HEADER_SEARCH_PATHS = "../../../addons/ofxFaceTracker/libs/FaceTracker/include/ ../../../addons/ofxCv/libs/ofxCv/include/ /usr/local/include ../../../addons/ofxCv/libs/CLD/include/ ../../../addons/ofxAssimpModelLoader/libs/assimp/include/";
+				USER_HEADER_SEARCH_PATHS = "../../../addons/ofxFaceTracker/libs/FaceTracker/include/ ../../../addons/ofxCv/libs/ofxCv/include/ ../../../addons/ofxCv/libs/CLD/include/ ../../../addons/ofxAssimpModelLoader/libs/assimp/include/ /usr/local/include";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1314,7 +1331,7 @@
 					"$(PROJECT_DIR)",
 				);
 				PRODUCT_NAME = "SS-2014";
-				USER_HEADER_SEARCH_PATHS = "../../../addons/ofxFaceTracker/libs/FaceTracker/include/ ../../../addons/ofxCv/libs/ofxCv/include/ /usr/local/include ../../../addons/ofxCv/libs/CLD/include/ ../../../addons/ofxAssimpModelLoader/libs/assimp/include/";
+				USER_HEADER_SEARCH_PATHS = "../../../addons/ofxFaceTracker/libs/FaceTracker/include/ ../../../addons/ofxCv/libs/ofxCv/include/ ../../../addons/ofxCv/libs/CLD/include/ ../../../addons/ofxAssimpModelLoader/libs/assimp/include/ /usr/local/include";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

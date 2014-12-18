@@ -3,13 +3,11 @@
 #include "ofMain.h"
 
 #include "ofxCv.h"
-#include "Clone.h"
-#include "ofxFaceTracker.h"
 #include "ofxFaceTrackerThreaded.h"
 #include "ofxAssimpModelLoader.h"
 #include "helpers.h"
 #include "gaussian1d.h"
-#include "ofxDelaunay.h"
+#include "ofxPostGlitch.h"
 
 class ofApp : public ofBaseApp{
 	public:
@@ -25,40 +23,23 @@ class ofApp : public ofBaseApp{
 	void loadPoints(string filename);
 	void loadFace(string filename);
 	
+    void exit();
+    
 	void keyPressed(int key);
 	void keyReleased(int key);
     
 	ofxFaceTrackerThreaded camTracker;
 	ofVideoGrabber cam;
-	
-	ofxFaceTracker srcTracker;
-	ofImage src;
-	vector<ofVec2f> srcPoints;
-	vector<int> selectedPoints;
-	vector<int> dragPoints;
-	vector<ofVec2f> dragPointsToMouse;
-    
-    ofFbo camFbo;
-	
-	bool selectArea;
-	ofVec2f selectAreaStart;
-	
-	bool cloneReady;
-	Clone clone;
-	ofFbo srcFbo, maskFbo;
-	
-	static const int lines [];
-	
-	long mousePressedTime;
     
     ofxAssimpModelLoader santaHat;
+    ofxAssimpModelLoader beardModel;
     ofLight light;
     
     //vecs for smoothing
     std::vector<float> camTrackerX;
     std::vector<float> camTrackerY;
-    std::vector<float> faceOutlineX;
-    std::vector<float> faceOutlineY;
+    std::vector<float> browRightY;
+    std::vector<float> browLeftY;
     std::vector<float> faceRectW;
     std::vector<float> faceRotateX;
     std::vector<float> faceRotateY;
@@ -70,4 +51,7 @@ class ofApp : public ofBaseApp{
     
     ofImage beard;
     ofFbo beardFbo;
+    
+    ofFbo glitchFbo;
+    ofxPostGlitch myGlitch;
 };

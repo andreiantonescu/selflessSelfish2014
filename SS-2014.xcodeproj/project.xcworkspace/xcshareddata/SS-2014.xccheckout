@@ -10,6 +10,8 @@
 	<string>SS-2014</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>210A84CB64DBE001319448A793DFC671846EB46E</key>
+		<string>https://github.com/maxillacult/ofxPostGlitch.git</string>
 		<key>37526DA425E5430474A14FBFA1BC4525160B5FC1</key>
 		<string>https://github.com/kylemcdonald/ofxCv.git</string>
 		<key>71D13D5141DBDF3E291DFA2EE747880B15B74845</key>
@@ -25,16 +27,18 @@
 	<string>SS-2014.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+		<key>210A84CB64DBE001319448A793DFC671846EB46E</key>
+		<string>../../../addons/ofxPostGlitch</string>
 		<key>37526DA425E5430474A14FBFA1BC4525160B5FC1</key>
-		<string>../../../../../addons/ofxCv</string>
+		<string>../../../addons/ofxCv</string>
 		<key>71D13D5141DBDF3E291DFA2EE747880B15B74845</key>
 		<string>../..</string>
 		<key>8B732DA6471F61653FC2B35F66CE49E00BD50686</key>
-		<string>../../../../../addons/ofxObjLoader</string>
+		<string>../../../addons/ofxObjLoader</string>
 		<key>A4D0373C699384D3146D509694B516AB9C7B5AD6</key>
-		<string>../../../../../addons/ofxFaceTracker</string>
+		<string>../../../addons/ofxFaceTracker</string>
 		<key>B98E3CFEC6501A75CC8123C65E3620511AA66D21</key>
-		<string>../../../../../addons/ofxDelaunay</string>
+		<string>../../../addons/ofxDelaunay</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/andreiantonescu/selflessSelfish2014.git</string>
@@ -75,6 +79,14 @@
 			<string>8B732DA6471F61653FC2B35F66CE49E00BD50686</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ofxObjLoader</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>210A84CB64DBE001319448A793DFC671846EB46E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxPostGlitch</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
