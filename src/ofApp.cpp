@@ -31,16 +31,18 @@ void ofApp::setup() {
     logoFbo.allocate(camWidth,camHeight);
     logoGlitch.setup(&logoFbo);
     
-    faceCount = 0;
-    
     logo.loadImage("logo.png");
+    
+    buffer = ofBufferFromFile("faceCount.txt");
+    faceCount = ofToInt(buffer.getText());
 }
 
 void ofApp::update() {
 	cam.update();
 	if(cam.isFrameNew()) {
         
-		camTracker.update(initialFramePreproc(toCv(cam)));
+//		camTracker.update(initialFramePreproc(toCv(cam)));
+        camTracker.update(toCv(cam));
         
 		if(camTracker.getFound()) {
             
@@ -71,6 +73,8 @@ void ofApp::update() {
             gaussianiir1d(&faceScale[0], faceScale.size(), smoothAlpha, smoothSteps);
             
             faceCount++;
+            buffer.set(ofToString(faceCount));
+            ofBufferToFile("faceCount.txt", buffer);
 		}
 	}
 }
@@ -86,7 +90,7 @@ void ofApp::draw() {
     glDisable(GL_LIGHTING);
 	ofSetColor(255);
     
-    if(camTrackerX.size() && camTrackerY.size()){
+    if(camTrackerX.size() && camTrackerY.size() && camTracker.getFound()){
 
         // hat
         ofPushMatrix();

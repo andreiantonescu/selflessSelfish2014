@@ -64,4 +64,6 @@ class ofApp : public ofBaseApp{
     int faceCount;
     
     ofImage logo;
+    
+    ofBuffer buffer;
 };
