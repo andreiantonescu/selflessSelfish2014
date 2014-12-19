@@ -28,6 +28,12 @@ void ofApp::setup() {
 //    
     glitchFbo.allocate(camWidth,camHeight);
     myGlitch.setup(&glitchFbo);
+    logoFbo.allocate(camWidth,camHeight);
+    logoGlitch.setup(&logoFbo);
+    
+    faceCount = 0;
+    
+    logo.loadImage("logo.png");
 }
 
 void ofApp::update() {
@@ -63,12 +69,16 @@ void ofApp::update() {
             gaussianiir1d(&faceRotateZ[0], faceRotateZ.size(), smoothAlpha, smoothSteps);
             gaussianiir1d(&faceRotateAngle[0], faceRotateAngle.size(), smoothAlpha, smoothSteps);
             gaussianiir1d(&faceScale[0], faceScale.size(), smoothAlpha, smoothSteps);
+            
+            faceCount++;
 		}
 	}
 }
 
 void ofApp::draw() {
 
+    ofBackground(255, 221, 50);
+    
     glitchFbo.begin();
     ofClear(255);
     cam.draw(0,0);
@@ -77,7 +87,8 @@ void ofApp::draw() {
 	ofSetColor(255);
     
     if(camTrackerX.size() && camTrackerY.size()){
-    
+
+        // hat
         ofPushMatrix();
         ofTranslate(ofVec3f(camTrackerX[camTrackerX.size()-1], camTrackerY[camTrackerY.size() - 1], - faceScale[faceScale.size()-1] * zCorrection));
         ofRotate(faceRotateAngle[faceRotateAngle.size() - 1],
@@ -102,6 +113,7 @@ void ofApp::draw() {
         glDisable(GL_LIGHTING);
         ofPopMatrix();
         
+        // beard
         ofPushMatrix();
         ofTranslate(camTracker.getPosition());
         
@@ -130,13 +142,31 @@ void ofApp::draw() {
 
     glitchFbo.end();
 
+    logoFbo.begin();
+    ofClear(255);
+    logo.draw(camWidth-70, camHeight-60);
+    logoFbo.end();
+    
+    logoGlitch.setFx(OFXPOSTGLITCH_CUTSLIDER, true);
+    logoGlitch.generateFx();
+    
     myGlitch.setFx(OFXPOSTGLITCH_GLOW,true);
     myGlitch.setFx(OFXPOSTGLITCH_CR_REDRAISE,true);
     myGlitch.setFx(OFXPOSTGLITCH_SLITSCAN, true);
     myGlitch.setFx(OFXPOSTGLITCH_CUTSLIDER, true);
     myGlitch.generateFx();
+    
     glitchFbo.draw(0, 0);
-
+    logoFbo.draw(0, 0);
+    
+//    if(((int)ofGetElapsedTimef()%5==0) && camTracker.getFound()) {
+//        ofPixels pixels; glitchFbo.readToPixels(pixels);
+//        image.setFromPixels(pixels);
+//        image.saveThreaded("savedFaces/tracker" + ofToString(faceCount) + ".png");
+//        cout<<"saved!"<<endl;
+//    }
+    
+    cout<<ofGetFrameRate()<<endl;
 }
 
 void ofApp::dragEvent(ofDragInfo dragInfo) {
@@ -160,7 +190,8 @@ void ofApp::mouseReleased(int x, int y, int button) {
 }
 
 void ofApp::keyPressed(int key) {
-
+    if(key=='f')
+        ofToggleFullscreen();
 }
 
 void ofApp::keyReleased(int key) {

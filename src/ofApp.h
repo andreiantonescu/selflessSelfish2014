@@ -8,6 +8,7 @@
 #include "helpers.h"
 #include "gaussian1d.h"
 #include "ofxPostGlitch.h"
+#include "threadedImageSaver.h"
 
 class ofApp : public ofBaseApp{
 	public:
@@ -53,5 +54,14 @@ class ofApp : public ofBaseApp{
     ofFbo beardFbo;
     
     ofFbo glitchFbo;
+    ofFbo logoFbo;
+    
+    ofxPostGlitch logoGlitch;
     ofxPostGlitch myGlitch;
+    
+    threadedImageSaver image;
+    
+    int faceCount;
+    
+    ofImage logo;
 };
